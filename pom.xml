@@ -18,6 +18,11 @@
       <artifactId>ehcache-core</artifactId>
       <version>2.5.0-SNAPSHOT</version>
     </dependency>
+    <dependency>
+      <groupId>com.rabbitmq</groupId>
+      <artifactId>amqp-client</artifactId>
+      <version>2.3.1</version>
+    </dependency>
     <!--  Test scope -->
     <dependency>
       <groupId>junit</groupId>
@@ -40,68 +45,6 @@
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.6</version>
-        <configuration>
-          <includes>
-            <include>**/*UnitTest.java</include>
-          </includes>
-          <excludes>
-            <exclude>**/*$*</exclude>
-            <exclude>**/Abstract*Test.java</exclude>
-            <exclude>**/Test*.java</exclude>
-          </excludes>
-          <forkMode>pertest</forkMode>
-          <useFile>false</useFile>
-        </configuration>
-        <executions>
-          <execution>
-            <id>integration-tests</id>
-            <phase>integration-test</phase>
-            <goals>
-              <goal>test</goal>
-            </goals>
-            <configuration>
-              <includes>
-                <include>**/*IntegrationTest.java</include>
-                <include>**/*AMQPReplicationTest.java</include>
-              </includes>
-              <excludes>
-                <exclude>**/Abstract*Test.java</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>2.3</version>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>checkstyle</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <skip>true</skip>
-          <configLocation>${basedir}/checkstyle/checkstyle.xml</configLocation>
-          <suppressionsLocation>${basedir}/checkstyle/suppressions.xml
-                    </suppressionsLocation>
-          <headerLocation>${basedir}/checkstyle/ClassHeader.txt</headerLocation>
-          <enableRSS>false</enableRSS>
-          <linkXRef>true</linkXRef>
-          <consoleOutput>true</consoleOutput>
-          <failsOnError>true</failsOnError>
-          <failOnViolation>true</failOnViolation>
-          <includeTestSourceDirectory>true</includeTestSourceDirectory>
-          <enableRulesSummary>true</enableRulesSummary>
         </configuration>
       </plugin>
     </plugins>
