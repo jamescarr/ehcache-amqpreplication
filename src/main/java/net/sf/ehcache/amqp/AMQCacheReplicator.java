@@ -25,13 +25,20 @@ public class AMQCacheReplicator implements CacheReplicator {
 
 	public void notifyElementRemoved(Ehcache cache, Element element)
 			throws CacheException {
-
+		AMQEventMessage message = new AMQEventMessage(EventMessage.REMOVE,
+				element.getKey(), element, cache.getName());
+		sendMessage(cache, message);
 	}
 
 	public void notifyElementPut(final Ehcache cache, Element element)
 			throws CacheException {
 		AMQEventMessage message = new AMQEventMessage(EventMessage.PUT,
 				element.getKey(), element, cache.getName());
+		sendMessage(cache, message);
+
+	}
+
+	private void sendMessage(final Ehcache cache, AMQEventMessage message) {
 		for (CachePeer peer : listRemoteCachePeers(cache)) {
 			try {
 				peer.send(Arrays.asList(message));
@@ -39,7 +46,6 @@ public class AMQCacheReplicator implements CacheReplicator {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	protected static List<CachePeer> listRemoteCachePeers(Ehcache cache) {
@@ -50,8 +56,7 @@ public class AMQCacheReplicator implements CacheReplicator {
 
 	public void notifyElementUpdated(Ehcache cache, Element element)
 			throws CacheException {
-		// TODO Auto-generated method stub
-
+//		throw new CacheException("not yet implemented");
 	}
 
 	public void notifyElementExpired(Ehcache cache, Element element) {
@@ -65,8 +70,9 @@ public class AMQCacheReplicator implements CacheReplicator {
 	}
 
 	public void notifyRemoveAll(Ehcache cache) {
-		// TODO Auto-generated method stub
-
+		AMQEventMessage message = new AMQEventMessage(EventMessage.REMOVE_ALL,
+				null, null, cache.getName());
+		sendMessage(cache, message);
 	}
 
 	public void dispose() {
