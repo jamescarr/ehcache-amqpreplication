@@ -44,14 +44,12 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 
 	public void put(Element element) throws IllegalArgumentException,
 			IllegalStateException, RemoteException {
-		// TODO Auto-generated method stub
-		
+		throw new RemoteException("Not implemented for AMQP");
 	}
 
 	public boolean remove(Serializable key) throws IllegalStateException,
 			RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		throw new RemoteException("Not implemented for AMQP");
 	}
 
 	public void removeAll() throws RemoteException, IllegalStateException {
@@ -78,33 +76,27 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 	}
 
 	public String getGuid() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RemoteException("Not implemented for AMQP");
 	}
 
 	public String getUrl() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RemoteException("Not implemented for AMQP");
 	}
 
 	public String getUrlBase() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RemoteException("Not implemented for AMQP");
 	}
 
-	public List getKeys() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<?> getKeys() throws RemoteException {
+		throw new RemoteException("Not implemented for AMQP");
 	}
 
 	public Element getQuiet(Serializable key) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RemoteException("Not implemented for AMQP");
 	}
 
 	public List getElements(List keys) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RemoteException("Not implemented for AMQP");
 	}
 	
 	@Override
