@@ -68,120 +68,120 @@ public class Tomfoolery {
 		}
 		Thread.sleep(1000);
 		assertThat(c2.getSize(), equalTo(5000));
-		c.registerCacheUsageListener(new CacheUsageListener() {
-			
-			public void notifyXaRollback() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyXaCommit() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyTimeTakenForGet(long millis) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyStatisticsEnabledChanged(boolean enableStatistics) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyStatisticsCleared() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyStatisticsAccuracyChanged(int statisticsAccuracy) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyRemoveAll() {
-				// TODO Auto-generated method stub
-				System.out.println("remove all");
-			}
-			
-			public void notifyCacheSearch(long executeTime) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheMissedWithNotFound() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheMissedWithExpired() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheMissOnDisk() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheMissOffHeap() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheMissInMemory() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheHitOnDisk() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheHitOffHeap() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheHitInMemory() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheElementUpdated() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheElementRemoved() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheElementPut() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheElementExpired() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void notifyCacheElementEvicted() {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			public void dispose() {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-		c2.removeAll();
-		Thread.sleep(100);
-		assertThat(c.getSize(), equalTo(0));
+//		c.registerCacheUsageListener(new CacheUsageListener() {
+//			
+//			public void notifyXaRollback() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyXaCommit() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyTimeTakenForGet(long millis) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyStatisticsEnabledChanged(boolean enableStatistics) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyStatisticsCleared() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyStatisticsAccuracyChanged(int statisticsAccuracy) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyRemoveAll() {
+//				// TODO Auto-generated method stub
+//				System.out.println("remove all");
+//			}
+//			
+//			public void notifyCacheSearch(long executeTime) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheMissedWithNotFound() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheMissedWithExpired() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheMissOnDisk() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheMissOffHeap() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheMissInMemory() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheHitOnDisk() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheHitOffHeap() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheHitInMemory() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheElementUpdated() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheElementRemoved() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheElementPut() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheElementExpired() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void notifyCacheElementEvicted() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			public void dispose() {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
+//		c2.removeAll();
+//		Thread.sleep(100);
+//		assertThat(c.getSize(), equalTo(0));
 	}
 }

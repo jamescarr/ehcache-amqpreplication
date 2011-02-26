@@ -31,7 +31,7 @@ public class AMQCacheManagerPeerProviderFactory extends CacheManagerPeerProvider
 		try {
 			Connection connection = factory.newConnection();
 			Channel channel = connection.createChannel();
-			
+			channel.exchangeDeclare(DEFAULT_EXCHANGE, "direct");
 			AMQCacheManagerPeerProvider amqCacheManagerPeerProvider = new AMQCacheManagerPeerProvider(channel, cacheManager, getExchangeName(properties));
 			return amqCacheManagerPeerProvider;
 		} catch (IOException e) {
