@@ -15,6 +15,9 @@ import net.sf.ehcache.loader.CacheLoader;
  */
 public class AMQCacheLoader implements CacheLoader {
 
+	public AMQCacheLoader(Ehcache cache) {
+	}
+
 	public Object load(Object key) throws CacheException {
 		// TODO Auto-generated method stub
 		return null;
