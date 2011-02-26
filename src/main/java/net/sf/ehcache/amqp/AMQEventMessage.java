@@ -17,11 +17,19 @@ import net.sf.ehcache.distribution.EventMessage;
 public class AMQEventMessage extends EventMessage{
 	private static final long serialVersionUID = 1L;
 	private String routingKey;
+	private final String cacheName;
 
 	public AMQEventMessage(int event, Serializable key, Element element, String cacheName) {
 		super(event, key, element);
+		this.cacheName = cacheName;
 		routingKey = "ehcache.replicate";
 	}
+	
+
+	public String getCacheName() {
+		return cacheName;
+	}
+
 
 	public String getRoutingKey() {
 		return routingKey;

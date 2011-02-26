@@ -18,11 +18,6 @@ public class AMQCacheLoaderFactory extends CacheLoaderFactory{
 
 	@Override
 	public CacheLoader createCacheLoader(Ehcache cache, Properties properties) {
-		String vhost = PropertyUtil.extractAndLogProperty("vhost", properties);
-		String username = PropertyUtil.extractAndLogProperty("vhost", properties);
-		String password = PropertyUtil.extractAndLogProperty("vhost", properties);
-		String host = PropertyUtil.extractAndLogProperty("host", properties);
-		String port = PropertyUtil.extractAndLogProperty("port", properties);
 		
 		return new AMQCacheLoader(cache);
 	}

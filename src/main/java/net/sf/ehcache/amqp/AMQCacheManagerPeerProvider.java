@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.rabbitmq.client.Channel;
@@ -30,16 +31,15 @@ import net.sf.ehcache.distribution.CachePeer;
  */
 public class AMQCacheManagerPeerProvider implements CacheManagerPeerProvider {
 	private final Channel channel;
-	private final CacheManager cacheManager;
+	private final AMQCachePeer amqCachePeer;
 
 	public AMQCacheManagerPeerProvider(Channel channel,
 			CacheManager cacheManager) {
 		this.channel = channel;
-		this.cacheManager = cacheManager;
+		amqCachePeer = new AMQCachePeer(channel, cacheManager);
 	}
 
 	public void registerPeer(String nodeId) {
-		System.out.println(nodeId);
 	}
 
 	public void unregisterPeer(String nodeId) {
@@ -49,49 +49,38 @@ public class AMQCacheManagerPeerProvider implements CacheManagerPeerProvider {
 	public List<CachePeer> listRemoteCachePeers(Ehcache cache)
 			throws CacheException {
 		ArrayList<CachePeer> peers = new ArrayList<CachePeer>();
-		peers.add(new AMQCachePeer(channel, cache.getName()));
-		return peers;
+		peers.add(amqCachePeer);
+		return Collections.unmodifiableList(peers);
 	}
 
+    /**
+     * Notifies providers to initialise themselves.
+     *
+     * @throws CacheException
+     */
 	public void init() {
 		try {
 			DeclareOk result = channel.queueDeclare();
 			String queueName = result.getQueue();
-			channel.queueBind(queueName, "ehcache.replication",
-					"ehcache.replicate");
-			System.out.println("bound queue " + queueName);
-			
-			DefaultConsumer callback = new DefaultConsumer(channel) {
-			     @Override public void handleDelivery(String consumerTag,
-			                                          Envelope envelope,
-			                                          BasicProperties properties,
-			                                          byte[] body)
-			         throws IOException
-			     {
-			         long deliveryTag = envelope.getDeliveryTag();
-			        	 ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(body));
-			        	 try {
-							AMQEventMessage m = (AMQEventMessage) in.readObject();
-							ByteArrayLongString cacheName = (ByteArrayLongString) properties.getHeaders().get("x-cache-name");
-							cacheManager.getCache(cacheName.toString()).put(m.getElement());
-							
-			        	 } catch (ClassNotFoundException e) {
-							e.printStackTrace();
-						}
-			     }
-			 };
-			 channel.setDefaultConsumer(callback);
-			channel.basicConsume(queueName, true,
-				     callback);
+			channel.queueBind(queueName, "ehcache.replication","ehcache.replicate");
+			channel.basicConsume(queueName, true, amqCachePeer);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CacheException(e);
 		}
 	}
 
+	/**
+     * Providers may be doing all sorts of exotic things and need to be able to clean up on dispose.
+     * In this case, we are simply closing the communication channel.
+     *
+     * @throws CacheException
+     */
 	public void dispose() throws CacheException {
-		// close channel
-		System.out.println("dispose");
+		try {
+			channel.close();
+		} catch (IOException e) {
+			throw new CacheException(e);
+		}
 	}
 
 	/**
@@ -101,7 +90,6 @@ public class AMQCacheManagerPeerProvider implements CacheManagerPeerProvider {
 	 * @return the time in ms, for a cluster to form
 	 */
 	public long getTimeForClusterToForm() {
-		System.out.println("time for cluster to form called");
 		return 0;
 	}
 
@@ -109,4 +97,5 @@ public class AMQCacheManagerPeerProvider implements CacheManagerPeerProvider {
 		return "AMQP";
 	}
 
+	
 }
