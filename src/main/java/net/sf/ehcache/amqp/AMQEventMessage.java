@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
+import net.sf.ehcache.CacheException;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.distribution.EventMessage;
 
@@ -41,8 +42,7 @@ public class AMQEventMessage extends EventMessage{
 			ObjectOutputStream out = new ObjectOutputStream(baos);
 			out.writeObject(this);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new CacheException(e);
 		}
 		return baos.toByteArray();
 	}

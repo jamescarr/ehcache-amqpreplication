@@ -19,12 +19,8 @@ import net.sf.ehcache.distribution.EventMessage;
 
 public class AMQCacheReplicator implements CacheReplicator {
 
-	private final Channel channel;
-	private final String exchangeName;
 
 	public AMQCacheReplicator(Channel channel, String exchangeName) {
-		this.channel = channel;
-		this.exchangeName = exchangeName;
 	}
 
 	public void notifyElementRemoved(Ehcache cache, Element element)

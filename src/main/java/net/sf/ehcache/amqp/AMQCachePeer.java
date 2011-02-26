@@ -35,11 +35,13 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 	private static final Logger LOG = LoggerFactory.getLogger(AMQResponder.class);
 	private final Channel channel;
 	private final CacheManager cacheManager;
+	private final String exchangeName;
 
-	public AMQCachePeer(Channel channel, CacheManager cacheManager) {
+	public AMQCachePeer(Channel channel, CacheManager cacheManager, String exchangeName) {
 		super(channel);
 		this.channel = channel;
 		this.cacheManager = cacheManager;
+		this.exchangeName = exchangeName;
 	}
 
 	public void put(Element element) throws IllegalArgumentException,
@@ -63,7 +65,7 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 		basicProperties.setContentType("application/x-java-serialized-object");
 		basicProperties.setType(AMQEventMessage.class.getName());
 		try {
-			channel.basicPublish("ehcache.replication", message.getRoutingKey(),
+			channel.basicPublish(exchangeName, message.getRoutingKey(),
 					basicProperties, message.toBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
