@@ -60,10 +60,12 @@
 	<repository>
 		<id>repo</id>
 		<url>https://github.com/jamescarr/ehcache-amqpreplication/raw/master/releases</url>
+		<uniqueVersion>false</uniqueVersion>
 	</repository>
 	<snapshotRepository>
 		<id>snapshot-repo</id>
 		<url>https://github.com/jamescarr/ehcache-amqpreplication/raw/master/snapshots</url>
+		<uniqueVersion>false</uniqueVersion>
 	</snapshotRepository>
   <!-- Enable the below if this one day gets merged into ehcache proper -->
   <!-- 

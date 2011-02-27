@@ -16,7 +16,7 @@
     <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache-core</artifactId>
-      <version>2.5.0-SNAPSHOT</version>
+      <version>2.3.2</version>
     </dependency>
     <dependency>
       <groupId>com.rabbitmq</groupId>
@@ -60,10 +60,12 @@
 	<repository>
 		<id>repo</id>
 		<url>https://github.com/jamescarr/ehcache-amqpreplication/raw/master/releases</url>
+		<uniqueVersion>false</uniqueVersion>
 	</repository>
 	<snapshotRepository>
 		<id>snapshot-repo</id>
 		<url>https://github.com/jamescarr/ehcache-amqpreplication/raw/master/snapshots</url>
+		<uniqueVersion>false</uniqueVersion>
 	</snapshotRepository>
   <!-- Enable the below if this one day gets merged into ehcache proper -->
   <!-- 
