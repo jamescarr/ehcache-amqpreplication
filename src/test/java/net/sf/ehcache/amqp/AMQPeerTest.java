@@ -33,12 +33,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Envelope;
-
+import static net.sf.ehcache.amqp.TestHelper.inMemoryCacheManager;
 /**
  * @author James R. Carr <james.r.carr@gmail.com>
  */
 @RunWith(MockitoJUnitRunner.class)
-public class AMQResponderTest {
+public class AMQPeerTest {
 	private static final Envelope ENVELOPE = new Envelope(1L, false, "", "");
 	@Captor
 	ArgumentCaptor<BasicProperties> basicProperties;
@@ -49,14 +49,11 @@ public class AMQResponderTest {
 
 	@Before
 	public void beforeEach() {
-		Configuration configuration = new Configuration();
-		CacheConfiguration cacheConfiguration = new CacheConfiguration();
-		cacheConfiguration.setName("cacheA");
-		cacheConfiguration.setMaxElementsInMemory(100);
-		configuration.addCache(cacheConfiguration);
-		manager = new CacheManager(configuration);
+		manager = inMemoryCacheManager();
 		responder = new AMQCachePeer(channel, manager, "ehcache.exchange");
 	}
+
+	
 
 	@Test
 	public void shouldHandlePut() throws IOException {

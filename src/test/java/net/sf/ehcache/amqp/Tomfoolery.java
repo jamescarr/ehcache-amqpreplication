@@ -55,133 +55,40 @@ public class Tomfoolery {
 		Thread.sleep(2000);
 		assertFalse(c2.isKeyInCache(element.getKey()));
 	}
+	public static void main(String[] args) {
+		CacheManager manager = new CacheManager();
+		manager.getCache("sampleCacheAsync").removeAll();
+	}
+
+	@Test
+	public void removeAll(){
+		CacheManager manager = new CacheManager();
+		manager.getCache("sampleCacheAsync").removeAll();
+		System.out.println(manager.getCache("sampleCacheAsync"));
+	}
 	
 	@Test
-	public void replicateRemoveAll() throws InterruptedException{
+	public void daemon() throws InterruptedException{
 		CacheManager manager = new CacheManager();
-		CacheManager manager2 = new CacheManager();
-
+		Cache cache = manager.getCache("sampleCacheAsync");
+		while(true){
+			System.out.println(cache.getSize());
+			Thread.sleep(2000);
+		}
+	}
+	@Test
+	public void removeAll2(){
+		CacheManager manager = new CacheManager();
 		Cache c = manager.getCache("sampleCacheAsync");
-		c2 = manager2.getCache("sampleCacheAsync");
-		for(int i =0; i < 5000;i++){
+		c.removeAll();
+	}
+	@Test
+	public void addATon() throws InterruptedException{
+		CacheManager manager = new CacheManager();
+		Cache c = manager.getCache("sampleCacheAsync");
+		for(int i =0; i < 10000;i++){
 			c.put(new Element("key"+i, i));
 		}
-		Thread.sleep(1000);
-		assertThat(c2.getSize(), equalTo(5000));
-//		c.registerCacheUsageListener(new CacheUsageListener() {
-//			
-//			public void notifyXaRollback() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyXaCommit() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyTimeTakenForGet(long millis) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyStatisticsEnabledChanged(boolean enableStatistics) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyStatisticsCleared() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyStatisticsAccuracyChanged(int statisticsAccuracy) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyRemoveAll() {
-//				// TODO Auto-generated method stub
-//				System.out.println("remove all");
-//			}
-//			
-//			public void notifyCacheSearch(long executeTime) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheMissedWithNotFound() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheMissedWithExpired() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheMissOnDisk() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheMissOffHeap() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheMissInMemory() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheHitOnDisk() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheHitOffHeap() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheHitInMemory() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheElementUpdated() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheElementRemoved() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheElementPut() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheElementExpired() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void notifyCacheElementEvicted() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			public void dispose() {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		});
-//		c2.removeAll();
-//		Thread.sleep(100);
-//		assertThat(c.getSize(), equalTo(0));
+		
 	}
 }

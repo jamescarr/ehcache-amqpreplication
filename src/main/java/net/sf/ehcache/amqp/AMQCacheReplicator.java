@@ -18,11 +18,10 @@ import net.sf.ehcache.distribution.CacheReplicator;
 import net.sf.ehcache.distribution.EventMessage;
 
 public class AMQCacheReplicator implements CacheReplicator {
-
-
-	public AMQCacheReplicator(Channel channel, String exchangeName) {
+	private final CachePeerLookup cachePeerLookup;
+	public AMQCacheReplicator(CachePeerLookup cachePeerLookup){
+		this.cachePeerLookup = cachePeerLookup;
 	}
-
 	public void notifyElementRemoved(Ehcache cache, Element element)
 			throws CacheException {
 		AMQEventMessage message = new AMQEventMessage(EventMessage.REMOVE,
@@ -48,10 +47,8 @@ public class AMQCacheReplicator implements CacheReplicator {
 		}
 	}
 
-	protected static List<CachePeer> listRemoteCachePeers(Ehcache cache) {
-		CacheManagerPeerProvider provider = cache.getCacheManager()
-				.getCacheManagerPeerProvider("AMQP");
-		return provider.listRemoteCachePeers(cache);
+	protected List<CachePeer> listRemoteCachePeers(Ehcache cache) {
+		return cachePeerLookup.listRemoteCachePeers(cache);
 	}
 
 	public void notifyElementUpdated(Ehcache cache, Element element)

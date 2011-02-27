@@ -9,21 +9,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.rmi.RemoteException;
-import java.util.HashMap;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Envelope;
-import com.rabbitmq.client.AMQP.BasicProperties;
-import com.rabbitmq.client.DefaultConsumer;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.distribution.CachePeer;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.rabbitmq.client.AMQP.BasicProperties;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.DefaultConsumer;
+import com.rabbitmq.client.Envelope;
 
 /**
  * Description Here.
@@ -32,7 +31,7 @@ import net.sf.ehcache.distribution.CachePeer;
  */
 public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 	private static final String MESSAGE_TYPE_NAME = AMQEventMessage.class.getName();
-	private static final Logger LOG = LoggerFactory.getLogger(AMQResponder.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AMQCachePeer.class);
 	private final Channel channel;
 	private final CacheManager cacheManager;
 	private final String exchangeName;
@@ -120,7 +119,7 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 	}
 
 	private void handleMissingCache(String cacheName) {
-		LOG.warn("Recieved replication update for cache not present: " + cacheName);
+		LOG.warn("Recieved replication update for cache not present: " + cacheName+". This could me the cache no longer exists.");
 	}
 
 	private void handleCacheEvent(AMQEventMessage message, Cache cache) {
@@ -132,7 +131,7 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 				cache.remove(message.getElement().getKey());
 				break;		
 			case REMOVE_ALL:
-				cache.removeAll();
+				cache.removeAll(true);
 				break;
 			default:
 				LOG.warn("Don't understand how to handle event of type " + message.getEvent());

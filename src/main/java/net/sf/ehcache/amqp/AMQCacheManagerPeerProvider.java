@@ -77,7 +77,7 @@ public class AMQCacheManagerPeerProvider implements CacheManagerPeerProvider {
 			String queueName = result.getQueue();
 			channel.queueBind(queueName, exchangeName,"ehcache.replicate");
 			channel.basicConsume(queueName, true, amqCachePeer);
-			LOG.info("binding queue " + queueName + " to exchange " + exchangeName + " on key ehcache.replicate");
+			LOG.info("Binding queue " + queueName + " to exchange " + exchangeName + " on key ehcache.replicate");
 		} catch (IOException e) {
 			LOG.error(e.getMessage(), e);
 			throw new CacheException(e);
@@ -110,6 +110,9 @@ public class AMQCacheManagerPeerProvider implements CacheManagerPeerProvider {
 		return 0;
 	}
 
+	/**
+	 * The sheme this provider uses
+	 */
 	public String getScheme() {
 		return "AMQP";
 	}

@@ -28,11 +28,12 @@ public class AMQCacheManagerPeerProviderFactory extends CacheManagerPeerProvider
 	public CacheManagerPeerProvider createCachePeerProvider(
 			CacheManager cacheManager, Properties properties) {
 		ConnectionFactory factory = ObjectMapper.createFrom(ConnectionFactory.class, properties);
+		final String exchangeName = getExchangeName(properties);
 		try {
 			Connection connection = factory.newConnection();
 			Channel channel = connection.createChannel();
-			channel.exchangeDeclare(DEFAULT_EXCHANGE, "direct");
-			AMQCacheManagerPeerProvider amqCacheManagerPeerProvider = new AMQCacheManagerPeerProvider(channel, cacheManager, getExchangeName(properties));
+			channel.exchangeDeclare(exchangeName, "direct");
+			AMQCacheManagerPeerProvider amqCacheManagerPeerProvider = new AMQCacheManagerPeerProvider(channel, cacheManager, exchangeName);
 			return amqCacheManagerPeerProvider;
 		} catch (IOException e) {
 			e.printStackTrace();
