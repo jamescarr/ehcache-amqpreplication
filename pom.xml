@@ -55,7 +55,18 @@
       </plugin>
     </plugins>
   </build>
+  
   <distributionManagement>
+	<repository>
+		<id>repo</id>
+		<url>https://github.com/jamescarr/ehcache-amqpreplication/raw/master/releases</url>
+	</repository>
+	<snapshotRepository>
+		<id>snapshot-repo</id>
+		<url>https://github.com/jamescarr/ehcache-amqpreplication/raw/master/snapshots</url>
+	</snapshotRepository>
+  <!-- Enable the below if this one day gets merged into ehcache proper -->
+  <!-- 
     <repository>
       <id>sourceforge-releases</id>
       <name>Sourceforge Release Repository</name>
@@ -66,5 +77,6 @@
       <name>Sourceforge Snapshot Repository</name>
       <url>http://oss.sonatype.org/content/repositories/sourceforge-snapshots</url>
     </snapshotRepository>
+     -->
   </distributionManagement>
 </project>
