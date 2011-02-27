@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>net.sf.ehcache</groupId>
+  <artifactId>ehcache-amqpreplication</artifactId>
+  <versioning>
+    <versions>
+      <version>0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20110227211819</lastUpdated>
+  </versioning>
+</metadata>

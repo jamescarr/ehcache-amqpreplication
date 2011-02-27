@@ -4,7 +4,7 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.config.CacheConfiguration;
 import net.sf.ehcache.config.Configuration;
 
-public class TestHelper {
+public abstract class TestHelper {
 	public static final String SIMPLE_CACHE  = "cacheA";
 	public static CacheManager inMemoryCacheManager() {
 		Configuration configuration = new Configuration();
