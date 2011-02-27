@@ -1,11 +1,12 @@
 package net.sf.ehcache.amqp;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Properties;
 
 import org.junit.Test;
 
 import com.rabbitmq.client.ConnectionFactory;
-import static org.junit.Assert.*;
 
 /**
  * Description Here.

@@ -9,10 +9,8 @@ import java.io.Serializable;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
-import net.sf.ehcache.statistics.CacheUsageListener;
 
 import org.junit.Test;
-import org.mockito.Mockito;
 
 
 /**

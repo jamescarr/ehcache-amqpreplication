@@ -1,3 +1,18 @@
+/**
+ *  Copyright 2011 James Carr
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package net.sf.ehcache.amqp;
 
 import static net.sf.ehcache.distribution.EventMessage.PUT;
@@ -64,6 +79,7 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 		basicProperties.setContentType("application/x-java-serialized-object");
 		basicProperties.setType(AMQEventMessage.class.getName());
 		try {
+			LOG.info("Publishing elment with key " + message.getElement() +" with event of " + message.getEvent());
 			channel.basicPublish(exchangeName, message.getRoutingKey(),
 					basicProperties, message.toBytes());
 		} catch (IOException e) {
@@ -105,6 +121,7 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 			BasicProperties properties, byte[] body) throws IOException {
 		if(MESSAGE_TYPE_NAME.equals(properties.getType())){
 			AMQEventMessage message = readMessageIn(body);
+			LOG.info("Received cache update " + message.getEvent() +" with element " + message.getElement() );
 			Cache cache = cacheManager.getCache(message.getCacheName());
 			if(cache==null){
 				handleMissingCache(message.getCacheName());
@@ -125,10 +142,10 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 	private void handleCacheEvent(AMQEventMessage message, Cache cache) {
 		switch (message.getEvent()) {
 			case PUT:
-				cache.put(message.getElement());				
+				cache.put(message.getElement(), true);				
 				break;
 			case REMOVE:
-				cache.remove(message.getElement().getKey());
+				cache.remove(message.getElement().getKey(), true);
 				break;		
 			case REMOVE_ALL:
 				cache.removeAll(true);

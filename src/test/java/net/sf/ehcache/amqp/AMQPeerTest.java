@@ -1,9 +1,9 @@
 package net.sf.ehcache.amqp;
 
+import static net.sf.ehcache.amqp.TestHelper.inMemoryCacheManager;
 import static net.sf.ehcache.distribution.EventMessage.PUT;
 import static net.sf.ehcache.distribution.EventMessage.REMOVE;
 import static net.sf.ehcache.distribution.EventMessage.REMOVE_ALL;
-import static org.hamcrest.CoreMatchers.any;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -14,13 +14,10 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.Arrays;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
-import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.config.Configuration;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +30,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.rabbitmq.client.AMQP.BasicProperties;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Envelope;
-import static net.sf.ehcache.amqp.TestHelper.inMemoryCacheManager;
 /**
  * @author James R. Carr <james.r.carr@gmail.com>
  */
