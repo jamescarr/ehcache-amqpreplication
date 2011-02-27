@@ -10,6 +10,7 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -23,6 +24,7 @@ import org.junit.Test;
  *
  * @author James R. Carr <james.r.carr@gmail.com>
  */
+@Ignore
 public class Tomfoolery {
 	Cache c2 = null;
 	@Test
