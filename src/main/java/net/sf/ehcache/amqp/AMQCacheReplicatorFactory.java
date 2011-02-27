@@ -26,8 +26,6 @@ import net.sf.ehcache.event.CacheEventListenerFactory;
  * @author James R. Carr <james.r.carr@gmail.com>
  */
 public class AMQCacheReplicatorFactory extends CacheEventListenerFactory {
-	private static final String EHCACHE_REPLICATION = "ehcache.replication";
-
 	@Override
 	public CacheEventListener createCacheEventListener(Properties properties) {
 		return new AMQCacheReplicator(new CachePeerLookup()); // not sure how this really is supposed to work

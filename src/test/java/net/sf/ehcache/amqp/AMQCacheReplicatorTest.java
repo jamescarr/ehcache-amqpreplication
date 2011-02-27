@@ -3,7 +3,9 @@ package net.sf.ehcache.amqp;
 import static java.util.Arrays.asList;
 import static net.sf.ehcache.amqp.TestHelper.inMemoryCacheManager;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -53,11 +55,37 @@ public class AMQCacheReplicatorTest {
 		assertThat(messageSent.getEvent(), equalTo(EventMessage.PUT));
 	}
 	@Test
-	public void shouldSendPutEventOnRemove() throws RemoteException{
+	public void shouldSendPutEventOnNotifyUpdate() throws RemoteException{
+		replicator.notifyElementUpdated(cache, new Element("a", 54));
+		
+		AMQEventMessage messageSent = getMessageSentToPeer();
+		assertThat(messageSent.getEvent(), equalTo(EventMessage.PUT));
+	}
+	@Test
+	public void shouldSendRemoveEvent() throws RemoteException{
 		replicator.notifyElementRemoved(cache, new Element("a", 54));
 		
 		AMQEventMessage messageSent = getMessageSentToPeer();
 		assertThat(messageSent.getEvent(), equalTo(EventMessage.REMOVE));
+	}
+	@Test
+	public void shouldSendRemoveAllEvent() throws RemoteException{
+		replicator.notifyRemoveAll(cache);
+		
+		AMQEventMessage messageSent = getMessageSentToPeer();
+		assertThat(messageSent.getEvent(), equalTo(EventMessage.REMOVE_ALL));
+	}
+	@Test
+	public void statusIsAliveOnceItHasBeenStartedup(){
+		assertTrue(replicator.alive());
+		assertFalse(replicator.notAlive());
+	}
+	@Test
+	public void shouldNotBeAliveOnceDisposed(){
+		replicator.dispose();
+		assertFalse(replicator.alive());
+		assertTrue(replicator.notAlive());
+	
 	}
 
 	private AMQEventMessage getMessageSentToPeer() throws RemoteException {
