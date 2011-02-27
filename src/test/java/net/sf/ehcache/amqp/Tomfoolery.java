@@ -15,9 +15,9 @@ import org.junit.Test;
 
 /**
  * A really crappy integration test. And by crappy I mean oh my god don't shit your pants
- * when you look at it kind of crappy. The test methods can only be ran in isolation and sometiems
- * pass, sometimes don't due to timing issues. Oh yeah and you need rabbitmq running for them to 
- * work too. 
+ * when you look at it kind of crappy. The test methods can only be ran in isolation and sometimes
+ * pass, sometimes don't due to timing issues. Oh yeah and you need rabbitmq running already
+ * for them to work too. 
  * 
  * I'll probably try to get rid of this and replace it with better, but for now it's all I got. ;)
  *
