@@ -32,7 +32,7 @@ public class AMQCacheManagerPeerProviderFactory extends CacheManagerPeerProvider
 		try {
 			Connection connection = factory.newConnection();
 			Channel channel = connection.createChannel();
-			channel.exchangeDeclare(exchangeName, "direct");
+			channel.exchangeDeclare(exchangeName, "topic");		//////NOTE: a "direct" exchange publishes messages to only one queue
 			AMQCacheManagerPeerProvider amqCacheManagerPeerProvider = new AMQCacheManagerPeerProvider(channel, cacheManager, exchangeName);
 			return amqCacheManagerPeerProvider;
 		} catch (IOException e) {
