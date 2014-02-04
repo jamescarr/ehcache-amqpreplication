@@ -79,9 +79,11 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 		basicProperties.setContentType("application/x-java-serialized-object");
 		basicProperties.setType(AMQEventMessage.class.getName());
 		try {
-			LOG.info("Publishing elment with key " + message.getElement() +" with event of " + message.getEvent());
+			if (LOG.isDebugEnabled()) {
+				LOG.info("Publishing elment with key " + message.getElement() +" with event of " + message.getEvent());
+			}
 			channel.basicPublish(exchangeName, message.getRoutingKey(),
-					basicProperties, message.toBytes());
+								 basicProperties, message.toBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -121,14 +123,21 @@ public class AMQCachePeer extends DefaultConsumer implements CachePeer {
 			BasicProperties properties, byte[] body) throws IOException {
 		if(MESSAGE_TYPE_NAME.equals(properties.getType())){
 			AMQEventMessage message = readMessageIn(body);
-			LOG.info("Received cache update " + message.getEvent() +" with element " + message.getElement() );
-			Cache cache = cacheManager.getCache(message.getCacheName());
-			if(cache==null){
-				handleMissingCache(message.getCacheName());
-			}
-			else{
-				handleCacheEvent(message, cache);
-			}
+//				if (LOG.isDebugEnabled()) {
+//					LOG.debug("Received cache update " + message.getEvent() +" with element " + message.getElement());
+//				}
+				Cache cache = cacheManager.getCache(message.getCacheName());
+				if(cache==null){
+					handleMissingCache(message.getCacheName());
+				}
+				else if ( !cache.getGuid().equals(message.getCacheGuid())) {
+					// only handle the events that were published by other peers
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("Cache="+cache.getName() +" ("+cache.getGuid()  +") is handling event "+message.getEvent()
+								 +" from peer=" +message.getCacheGuid());
+					}
+					handleCacheEvent(message, cache);
+				}
 		}else{
 			LOG.warn("Received non cache message of unknown type");
 		}

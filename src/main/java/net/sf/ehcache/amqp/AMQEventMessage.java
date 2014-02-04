@@ -34,10 +34,12 @@ public class AMQEventMessage extends EventMessage{
 	private static final long serialVersionUID = 1L;
 	private String routingKey;
 	private final String cacheName;
+	private final String cacheGuid;
 
-	public AMQEventMessage(int event, Serializable key, Element element, String cacheName) {
+	public AMQEventMessage(int event, Serializable key, Element element, String cacheName, String cacheGuid) {
 		super(event, key, element);
 		this.cacheName = cacheName;
+		this.cacheGuid = cacheGuid;
 		routingKey = "ehcache.replicate";
 	}
 	
@@ -46,6 +48,9 @@ public class AMQEventMessage extends EventMessage{
 		return cacheName;
 	}
 
+	public String getCacheGuid() {
+		return this.cacheGuid;
+	}
 
 	public String getRoutingKey() {
 		return routingKey;
